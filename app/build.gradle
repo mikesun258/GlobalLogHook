@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
 }
 android {
+    // 新增namespace，和Manifest的package保持一致
+    namespace "com.log.hook"
     compileSdk 34
     defaultConfig {
         applicationId "com.log.hook"
