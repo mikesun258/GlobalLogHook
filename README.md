@@ -1,2 +1,0 @@
-# GlobalLogHook
-日志
