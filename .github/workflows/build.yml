@@ -1,0 +1,38 @@
+name: Build GlobalLogHook APK
+# 触发规则：推送代码自动编译，也可以手动点运行
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch: # 手动运行开关
+
+jobs:
+  buildApk:
+    runs-on: ubuntu-latest # 云服务器系统
+    steps:
+      # 1.拉取仓库全部代码
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2.配置Java17，匹配gradle8.3
+      - name: Setup JDK17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle # 缓存依赖，下次编译更快
+
+      # 3.给gradlew添加Linux执行权限
+      - name: Grant gradlew permission
+        run: chmod +x gradlew
+
+      # 4.下载AndroidSDK、依赖，编译Debug APK
+      - name: Compile debug apk
+        run: ./gradlew assembleDebug
+
+      # 5.把编译好的APK打包成产物，可供下载
+      - name: Upload compiled APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: GlobalLogHook-Debug
+          path: app/build/outputs/apk/debug/app-debug.apk
+
