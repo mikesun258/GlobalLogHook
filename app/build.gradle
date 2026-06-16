@@ -1,7 +1,6 @@
 plugins {
     id 'com.android.application'
 }
-
 android {
     compileSdk 34
     defaultConfig {
@@ -16,11 +15,12 @@ android {
             minifyEnabled false
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
 }
-
 dependencies {
-    // LSPosed api
     compileOnly 'de.robv.android.xposed:api:82'
     compileOnly 'de.robv.android.xposed:api:sdk:82'
 }
-
